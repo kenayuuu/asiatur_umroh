@@ -11,7 +11,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans text-gray-800 bg-gray-100"> {{-- Latar belakang abu-abu --}}
+<body class="font-sans antialiased text-slate-900 bg-slate-50">
 
     {{--
     Layout ini TIDAK memiliki @include('partials.navbar').
@@ -37,7 +37,7 @@
     </main>
 
     {{-- Floating WhatsApp Button --}}
-    @include('partials.whatsapp-float')
+    {{-- @include('partials.whatsapp-float') --}}
 
 </body>
 

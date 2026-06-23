@@ -21,11 +21,11 @@
     --}}
 </head>
 
-<body class="font-sans text-gray-800 bg-white">
+<body class="font-sans antialiased text-slate-100 bg-slate-950">
 
     @include('partials.navbar')
 
-    <main class="min-h-screen">
+    <main class="min-h-screen bg-slate-950">
         @yield('content')
     </main>
 

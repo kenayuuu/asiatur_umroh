@@ -11,18 +11,9 @@ class BusinessSeeder extends Seeder
     {
         DB::table('businesses')->insert([
             [
-                'judul' => 'Rental Mobil',
-                'deskripsi' => 'Layanan rental mobil untuk perjalanan wisata dan umroh.',
-                'image' => 'rental_mobil.jpg',
-                'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
-            [
-                'judul' => 'Hotel Syariah',
-                'deskripsi' => 'Penginapan nyaman dan aman untuk jamaah.',
-                'image' => 'hotel_syariah.jpg',
+                'judul' => 'Jagung Pakan Ternak',
+                'deskripsi' => 'Penjualan jagung sebagai pakan ternak berkualitas tinggi.',
+                'image' => 'images/pakan ternak.png',
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -36,12 +36,19 @@ class PackageKegiatan extends Model
         return $this->hasMany(Calon::class, 'package_kegiatan_id');
     }
 
+    // accessor biar bisa pakai: $business->image_url
     public function getImageUrlAttribute(): string
     {
-        if (!empty($this->image)) {
-            return asset('storage/' . $this->image);
+        if (empty($this->image)) {
+            return asset('images/asiatur2.png');
         }
 
-        return asset('images/hero.jpg');
+        // kalau sudah full URL
+        if (preg_match('/^https?:\/\//', $this->image)) {
+            return $this->image;
+        }
+
+        // kalau path dari public/uploads/...
+        return asset($this->image);
     }
 }

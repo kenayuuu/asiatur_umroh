@@ -29,9 +29,9 @@
                         class="group rounded-3xl border border-gray-200 bg-white p-6 shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
 
                         {{-- Image --}}
-                        <div class="overflow-hidden rounded-3xl mb-5 bg-gray-100">
-                            <img src="{{ $package->image }}" alt="{{ $package->nama_paket }}"
-                                class="w-full h-44 object-cover object-center transition duration-500 group-hover:scale-105">
+                        <div class="overflow-hidden rounded-3xl mb-5 bg-black">
+                            <img src="{{ $package->image_url }}" alt="{{ $package->nama_paket }}"
+                                class="w-full h-44 object-cover object-top transition duration-500 group-hover:scale-105">
                         </div>
 
                         {{-- Content --}}

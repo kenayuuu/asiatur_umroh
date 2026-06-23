@@ -1,0 +1,202 @@
+.page-header {
+    background: linear-gradient(135deg, #ff645a, #c60c00);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    color: white;
+    box-shadow: 0 10px 25px rgba(198, 12, 0, 0.15);
+}
+
+.page-header h3 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: .35rem;
+}
+
+.page-header p {
+    margin: 0;
+    color: rgba(255, 255, 255, .85);
+}
+
+.btn-add {
+    background: white;
+    color: #c60c00;
+    border: none;
+    border-radius: .9rem;
+    padding: .85rem 1.4rem;
+    font-weight: 700;
+    transition: .3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .12);
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    background: #fff5f5;
+    color: #c60c00;
+}
+
+.calon-card {
+    background: white;
+    border: none;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    transition: .3s ease;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .06);
+    height: 100%;
+}
+
+.calon-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, .12);
+}
+
+.calon-header {
+    background: linear-gradient(135deg, #ff645a, #c60c00);
+    padding: 1.5rem;
+    color: white;
+    position: relative;
+}
+
+.calon-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+.calon-name {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: .3rem;
+}
+
+.calon-package {
+    font-size: .95rem;
+    opacity: .9;
+}
+
+.calon-body {
+    padding: 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: 1rem;
+    color: #4b5563;
+    font-size: .95rem;
+}
+
+.info-item i {
+    width: 38px;
+    height: 38px;
+    border-radius: .8rem;
+    background: #fff5f5;
+    color: #c60c00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-buttons {
+    display: flex;
+    gap: .75rem;
+    margin-top: 1.5rem;
+}
+
+.action-buttons form {
+    flex: 1;
+}
+
+.btn-action {
+    border-radius: .9rem;
+    border: none;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .25s ease;
+    font-weight: 600;
+}
+
+.btn-detail {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.btn-detail:hover {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-edit {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.btn-edit:hover {
+    background: #f59e0b;
+    color: white;
+}
+
+.btn-delete {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.btn-delete:hover {
+    background: #dc2626;
+    color: white;
+}
+
+.empty-state {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 4rem 2rem;
+    text-align: center;
+    box-shadow: 0 4px 18px rgba(0,0,0,.05);
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: #d1d5db;
+    margin-bottom: 1rem;
+}
+
+.pagination {
+    gap: .4rem;
+}
+
+.pagination .page-link {
+    border: none;
+    border-radius: .7rem;
+    color: #c60c00;
+    padding: .7rem 1rem;
+    font-weight: 600;
+}
+
+.pagination .active .page-link {
+    background: linear-gradient(135deg, #ff645a, #c60c00);
+    color: white;
+}
+
+@media(max-width:768px){
+
+    .page-header {
+        padding: 1.5rem;
+    }
+
+    .page-header h3 {
+        font-size: 1.5rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+}

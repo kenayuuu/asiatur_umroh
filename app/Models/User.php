@@ -22,7 +22,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone',
         'address',
         'role',
-        'email_verified_at', // PERBAIKAN: Tambahkan ini agar bisa di-update via create/update
+        'email_verified_at',
+        'otp_code',
+        'otp_expires_at',
+        'is_admin_created',
     ];
 
     /**
@@ -38,6 +41,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'otp_expires_at' => 'datetime',
+        'is_admin_created' => 'boolean',
         'password' => 'hashed', // otomatis hash password di Laravel 10+
     ];
 

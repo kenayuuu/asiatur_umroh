@@ -99,7 +99,7 @@ return [
 
     'key' => env('APP_KEY'),
 
-    'Indonesia' => Laravolt\Indonesia\Facade::class,
+    // 'Indonesia' => Laravolt\Indonesia\Facade::class,
 
     'previous_keys' => [
         ...array_filter(

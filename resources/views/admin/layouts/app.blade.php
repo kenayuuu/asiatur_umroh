@@ -281,13 +281,15 @@
                 </li>
 
                 {{-- Jamaah --}}
-                <li class="nav-item">
-                    <a href="{{ route('admin.calons.index') }}"
-                        class="nav-link {{ request()->routeIs('admin.calons*') ? 'active' : '' }}">
-                        <i class="bi bi-people-fill"></i>
-                        Jamaah
-                    </a>
-                </li>
+                @if (auth()->user()->role === 'admin')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.calons.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.calons*') ? 'active' : '' }}">
+                            <i class="bi bi-people-fill"></i>
+                            Jamaah
+                        </a>
+                    </li>
+                @endif
 
                 {{-- Kunjungan --}}
                 <li class="nav-item">
@@ -299,13 +301,26 @@
                 </li>
 
                 {{-- Bisnis --}}
-                <li class="nav-item">
-                    <a href="{{ route('admin.businesses.index') }}"
-                        class="nav-link {{ request()->routeIs('admin.businesses*') ? 'active' : '' }}">
-                        <i class="bi bi-briefcase-fill"></i>
-                        Bisnis
-                    </a>
-                </li>
+                @if (auth()->user()->role === 'admin')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.businesses.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.businesses*') ? 'active' : '' }}">
+                            <i class="bi bi-briefcase-fill"></i>
+                            Bisnis
+                        </a>
+                    </li>
+                @endif
+
+                {{-- Users --}}
+                @if (auth()->user()->role === 'admin')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.users.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
+                            <i class="bi bi-person-badge-fill"></i>
+                            Users
+                        </a>
+                    </li>
+                @endif
 
             </ul>
 
@@ -351,7 +366,8 @@
 
                     <button class="profile-btn" data-bs-toggle="dropdown">
 
-                        <img src="{{ Auth::user()->profile_photo_url ?? asset('/images/avatar.jpg') }}" alt="Avatar">
+                        <img src="{{ Auth::user()->profile_photo_url ?? asset('/images/profile.jpg') }}"
+                            alt="Avatar">
 
                         <div class="d-none d-md-block text-start">
                             <div class="fw-semibold">
@@ -377,6 +393,13 @@
                             <small class="text-muted">
                                 {{ Auth::user()->email }}
                             </small>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.profile.password.reset') }}" class="dropdown-item">
+                                <i class="bi bi-key-fill me-2"></i>
+                                Reset Password
+                            </a>
                         </li>
 
                         <li>

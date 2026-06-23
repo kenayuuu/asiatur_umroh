@@ -5,14 +5,54 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Calon;
 use App\Models\PackageKegiatan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class CalonController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-        $calons = Calon::with('packageKegiatan')->orderBy('created_at', 'desc')->paginate(15);
-        return view('admin.calons.index', compact('calons'));
+        $this->authorizeAdmin();
+    }
+
+    private function authorizeAdmin()
+    {
+        if (auth()->check() && auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized access');
+        }
+    }
+    public function index(Request $request)
+    {
+        $packages = PackageKegiatan::orderBy('nama_paket')->get();
+        $selectedPackageId = $request->query('package_id');
+
+        $query = Calon::with('packageKegiatan')->orderBy('created_at', 'asc');
+        if ($selectedPackageId) {
+            $query->where('package_kegiatan_id', $selectedPackageId);
+        }
+
+        $calons = $query->paginate(15)->withQueryString();
+
+        return view('admin.calons.index', compact('calons', 'packages', 'selectedPackageId'));
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $selectedPackageId = $request->query('package_id');
+
+        $query = Calon::with('packageKegiatan')->orderBy('created_at', 'asc');
+        if ($selectedPackageId) {
+            $query->where('package_kegiatan_id', $selectedPackageId);
+        }
+
+        $calons = $query->get();
+        $package = $selectedPackageId ? PackageKegiatan::find($selectedPackageId) : null;
+
+        $filename = 'daftar-calon-peserta' . ($package ? '-' . str_replace(' ', '-', strtolower($package->nama_paket)) : '') . '-' . now()->format('YmdHis') . '.pdf';
+
+        $pdf = Pdf::loadView('admin.calons.export-pdf', compact('calons', 'package'));
+
+        return $pdf->download($filename);
     }
 
     public function create()
@@ -32,7 +72,7 @@ class CalonController extends Controller
             'no_ktp' => 'nullable|string|max:100',
             'akta_kelahiran' => 'nullable|string|max:100',
             'no_telepon' => 'required|string|max:30',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email:rfc,dns|max:255',
             'jenis_perjalanan' => 'required|in:wisata,umroh,haji',
             'tanggal_berangkat' => 'nullable|date',
             'package_kegiatan_id' => 'required|exists:package_kegiatans,id',
@@ -66,7 +106,7 @@ class CalonController extends Controller
             'no_ktp' => 'nullable|string|max:100',
             'akta_kelahiran' => 'nullable|string|max:100',
             'no_telepon' => 'required|string|max:30',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email:rfc,dns|max:255',
             'jenis_perjalanan' => 'required|in:wisata,umroh,haji',
             'tanggal_berangkat' => 'nullable|date',
             'package_kegiatan_id' => 'required|exists:package_kegiatans,id',

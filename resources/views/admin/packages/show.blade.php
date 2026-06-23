@@ -33,10 +33,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="card shadow-sm mb-4">
-                    @if ($package->image)
-                        <img src="{{ asset('storage/' . $package->image) }}" class="card-img-top"
-                            alt="{{ $package->nama_paket }}">
-                    @endif
+                    <img src="{{ $package->image_url }}" class="card-img-top" alt="{{ $package->nama_paket }}">
                     <div class="card-body">
                         <p><strong>Status:</strong> {{ $package->is_active ? 'Aktif' : 'Tidak Aktif' }}</p>
                         <p><strong>Jumlah Calon:</strong> {{ $package->calons->count() }}</p>

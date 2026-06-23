@@ -19,7 +19,7 @@
                     <article
                         class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl shadow-red-900/10 transition hover:-translate-y-1 hover:border-red-500/40">
                         <div class="rounded-3xl overflow-hidden bg-gray-100 mb-5">
-                            <img src="{{ $business->image }}" alt="{{ $business->judul }}"
+                            <img src="{{ $business->image_url }}" alt="{{ $business->judul }}"
                                 class="h-52 w-full object-cover" />
                         </div>
                         <div class="space-y-4">

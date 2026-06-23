@@ -8,31 +8,37 @@
     ];
 @endphp
 
-<nav id="navbar" class="fixed top-0 left-0 w-full z-[9999] bg-white/95 backdrop-blur-sm shadow-sm">
+<nav id="navbar" class="fixed top-0 left-0 w-full z-[9999] bg-white border-b border-gray-200">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 lg:h-20">
 
+            {{-- Logo --}}
             <div class="flex-shrink-0">
-                <a href="{{ route('landing') }}" class="flex items-center space-x-2">
+                <a href="{{ route('landing') }}" class="flex items-center space-x-3">
                     <img src="{{ asset('images/asiatur2.png') }}" class="h-10 lg:h-12 w-auto" alt="Logo ASIATUR">
-                    <span class="text-red-600 font-bold hidden sm:inline-block">
+
+                    <span class="text-red-600 text-xl font-bold hidden sm:inline-block">
                         {{ __('app.name') ?? 'ASIATUR' }}
                     </span>
                 </a>
             </div>
 
-            {{-- =================================== --}}
             {{-- NAVIGASI DESKTOP --}}
-            {{-- =================================== --}}
             <div class="hidden lg:flex items-center">
-                <div class="flex items-center space-x-1">
+                <div class="flex items-center space-x-2">
+
                     @foreach ($navItems as $item)
                         <a href="{{ $item['href'] }}"
-                            class="nav-link px-3 py-2 rounded-md text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors">
+                            class="px-4 py-2 rounded-xl
+                            text-black font-medium
+                            transition-all duration-300
+                            hover:bg-red-600
+                            hover:text-white">
                             {{ $item['name'] }}
                         </a>
                     @endforeach
+
                 </div>
 
                 {{-- PEMISAH --}}
@@ -47,7 +53,7 @@
                                        border border-red-500
                                        hover:bg-red-50 hover:text-red-700
                                        transition duration-300 ease-in-out">
-                            {{ __('auth.login') }}
+                            Login
                         </a>
                     @else
                         {{-- PERBAIKAN: Tombol Logout diganti User Menu Dropdown --}}
@@ -87,7 +93,7 @@
                                     <button type="submit"
                                         class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
                                         role="menuitem" tabindex="-1">
-                                        {{ __('auth.logout') }}
+                                        Logout
                                     </button>
                                 </form>
                             </div>
@@ -116,7 +122,7 @@
     {{-- =================================== --}}
     {{-- MENU MOBILE DROPDOWN --}}
     {{-- =================================== --}}
-    <div id="mobile-menu" class="hidden lg:hidden bg-white border-t">
+    <div id="mobile-menu" class="hidden lg:hidden bg-slate-950/95 border-t border-white/10">
         <div class="px-2 pt-2 pb-3 space-y-1">
             @foreach ($navItems as $item)
                 <a href="{{ $item['href'] }}"
@@ -135,7 +141,7 @@
                                    border border-red-500
                                    hover:bg-red-50 hover:text-red-700
                                    transition duration-300 ease-in-out">
-                    {{ __('auth.login') }}
+                    Login
                 </a>
             @else
                 {{-- PERBAIKAN: Tombol Logout diganti User Menu --}}
@@ -155,7 +161,7 @@
                         <button type="submit"
                             class="block w-full text-left px-3 py-2 rounded-md text-red-600 hover:text-red-700 hover:bg-red-50
                                        font-medium transition duration-300 ease-in-out">
-                            {{ __('auth.logout') }}
+                            Logout
                         </button>
                     </form>
                 </div>

@@ -9,27 +9,29 @@ use Illuminate\Support\Facades\Storage;
 
 class BusinessController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->authorizeAdmin();
+    }
+
+    private function authorizeAdmin()
+    {
+        if (auth()->check() && auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized access');
+        }
+    }
+
     public function index()
     {
         $businesses = Business::latest()->paginate(10);
-
-        return view('admin.business.index', compact('businesses'));
+        return view('admin.businesses.index', compact('businesses'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('admin.business.create');
+        return view('admin.businesses.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -39,48 +41,48 @@ class BusinessController extends Controller
             'is_active' => 'required|boolean',
         ]);
 
-        $image = null;
+        $imagePath = null;
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image')
-                ->store('business', 'public');
+            $file = $request->file('image');
+
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            $destination = $_SERVER['DOCUMENT_ROOT'] . '/uploads/business';
+
+            if (!file_exists($destination)) {
+                mkdir($destination, 0755, true);
+            }
+
+            $file->move($destination, $filename);
+
+            $imagePath = 'uploads/business/' . $filename;
         }
 
         Business::create([
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
-            'image' => $image,
+            'image' => $imagePath, // FIXED (ini yang sebelumnya salah)
             'is_active' => $request->is_active,
         ]);
 
         return redirect()
-            ->route('admin.business.index')
+            ->route('admin.businesses.index')
             ->with('success', 'Business berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $business = Business::findOrFail($id);
-
-        return view('admin.business.show', compact('business'));
+        return view('admin.businesses.show', compact('business'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $business = Business::findOrFail($id);
-
-        return view('admin.business.edit', compact('business'));
+        return view('admin.businesses.edit', compact('business'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $business = Business::findOrFail($id);
@@ -92,47 +94,53 @@ class BusinessController extends Controller
             'is_active' => 'required|boolean',
         ]);
 
-        $image = $business->image;
+        $imagePath = $business->image;
 
         if ($request->hasFile('image')) {
 
-            // hapus gambar lama
-            if ($business->image && Storage::disk('public')->exists($business->image)) {
-                Storage::disk('public')->delete($business->image);
+            // hapus gambar lama (kalau ada)
+            if ($business->image && file_exists(public_path($business->image))) {
+                unlink(public_path($business->image));
             }
 
-            $image = $request->file('image')
-                ->store('business', 'public');
+            $file = $request->file('image');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            $destination = $_SERVER['DOCUMENT_ROOT'] . '/uploads/business';
+
+            if (!file_exists($destination)) {
+                mkdir($destination, 0777, true);
+            }
+
+            $file->move($destination, $filename);
+
+            $imagePath = 'uploads/business/' . $filename;
         }
 
         $business->update([
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
-            'image' => $image,
+            'image' => $imagePath,
             'is_active' => $request->is_active,
         ]);
 
         return redirect()
-            ->route('admin.business.index')
+            ->route('admin.businesses.index')
             ->with('success', 'Business berhasil diupdate.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $business = Business::findOrFail($id);
 
-        // hapus gambar
-        if ($business->image && Storage::disk('public')->exists($business->image)) {
-            Storage::disk('public')->delete($business->image);
+        if ($business->image && file_exists(public_path($business->image))) {
+            unlink(public_path($business->image));
         }
 
         $business->delete();
 
         return redirect()
-            ->route('admin.business.index')
+            ->route('admin.businesses.index')
             ->with('success', 'Business berhasil dihapus.');
     }
 }

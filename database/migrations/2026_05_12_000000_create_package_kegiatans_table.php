@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('tanggal_berlangsung')->nullable();
             $table->string('destinasi');
             $table->unsignedBigInteger('harga')->default(0);
-            $table->unsignedBigInteger('deposit')->nullable();
+            $table->unsignedBigInteger('deposit')->default(0);
             $table->enum('kategori', ['wisata', 'umroh', 'haji'])->default('wisata');
             $table->string('image')->nullable();
             $table->string('durasi')->nullable();

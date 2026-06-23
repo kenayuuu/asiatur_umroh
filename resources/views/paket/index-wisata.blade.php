@@ -23,26 +23,8 @@
                     <article
                         class="group rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl shadow-red-900/10 transition hover:-translate-y-1 hover:border-red-500/40">
                         <div class="overflow-hidden rounded-3xl mb-5 bg-black">
-
-                            {{-- @php
-                                $imagePath = '';
-
-                                if (!empty($package->image)) {
-                                    // Jika sudah berupa URL lengkap
-                                    if (Str::startsWith($package->image, ['http://', 'https://'])) {
-                                        $imagePath = $package->image;
-                                    } else {
-                                        // Ambil dari public/images
-                                        $imagePath = asset('images/' . $package->image);
-                                    }
-                                } else {
-                                    $imagePath = asset('images/default.jpg');
-                                }
-                            @endphp --}}
-
-                            <img src="{{ $package->image }}" alt="{{ $package->nama_paket }}"
-                                class="w-full h-44 object-cover object-center transition duration-500 group-hover:scale-105">
-
+                            <img src="{{ $package->image_url }}" alt="{{ $package->nama_paket }}"
+                                class="w-full h-44 object-cover object-top transition duration-500 group-hover:scale-105">
                         </div>
                         <div class="space-y-4">
                             <div class="flex items-center justify-between gap-4">
@@ -77,7 +59,7 @@
                         </div>
                     </article>
                 @empty
-                    <div class="col-span-3 rounded-3xl border border-black/10 bg-black p-10 text-center text-white-300">
+                    <div class="col-span-3 rounded-3xl border border-black/10 bg-grey p-10 text-center text-white-300">
                         Belum ada paket wisata aktif saat ini. Silakan kembali nanti.
                     </div>
                 @endforelse

@@ -1,6 +1,6 @@
 {{-- Floating WhatsApp Button --}}
 <div class="whatsapp-float">
-    <a href="https://wa.me/6283182348544?text=Halo%20ASIATUR%2C%20saya%20ingin%20bertanya%20tentang%20paket%20wisata%20atau%20umroh."
+    <a href="https://wa.me/628116619260?text=Halo%20ASIATUR%2C%20saya%20ingin%20bertanya%20tentang%20paket%20wisata%20atau%20umroh."
         target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="Hubungi kami via WhatsApp">
         <div class="whatsapp-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
@@ -10,9 +10,6 @@
         </div>
         <span class="whatsapp-pulse"></span>
     </a>
-    <div class="whatsapp-badge">
-        <span>Hubungi Kami</span>
-    </div>
 </div>
 
 <style>

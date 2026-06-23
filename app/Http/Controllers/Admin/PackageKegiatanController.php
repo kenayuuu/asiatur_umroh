@@ -33,21 +33,49 @@ class PackageKegiatanController extends Controller
             'durasi' => 'nullable|string|max:255',
             'deskripsi' => 'nullable|string',
             'rundown' => 'nullable|string',
-            'image' => 'nullable|string|max:255',
-            'is_active' => 'sometimes|boolean',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'is_active' => 'nullable',
         ]);
 
-        $validated['slug'] = Str::slug($validated['nama_paket']) . '-' . Str::random(4);
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+
+            $file = $request->file('image');
+
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            $destination = $_SERVER['DOCUMENT_ROOT'] . '/uploads/packages';
+
+            if (!file_exists($destination)) {
+                mkdir($destination, 0755, true);
+            }
+
+            $file->move($destination, $filename);
+
+            $imagePath = 'uploads/packages/' . $filename;
+        }
+
+        $validated['image'] = $imagePath;
+
+        $validated['slug'] =
+            Str::slug($validated['nama_paket']) . '-' . Str::random(4);
+
         $validated['is_active'] = $request->has('is_active');
 
         PackageKegiatan::create($validated);
 
-        return redirect()->route('admin.packages.index')->with('success', 'Paket berhasil ditambahkan.');
+        return redirect()
+            ->route('admin.packages.index')
+            ->with('success', 'Paket berhasil ditambahkan.');
     }
 
     public function show(PackageKegiatan $package)
     {
-        $calons = Calon::where('package_kegiatan_id', $package->id)->orderBy('created_at', 'desc')->get();
+        $calons = Calon::where('package_kegiatan_id', $package->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view('admin.packages.show', compact('package', 'calons'));
     }
 
@@ -68,19 +96,53 @@ class PackageKegiatanController extends Controller
             'durasi' => 'nullable|string|max:255',
             'deskripsi' => 'nullable|string',
             'rundown' => 'nullable|string',
-            'image' => 'nullable|string|max:255',
-            'is_active' => 'sometimes|boolean',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'is_active' => 'nullable',
         ]);
 
+        $imagePath = $package->image;
+
+        if ($request->hasFile('image')) {
+
+            // hapus file lama
+            if ($package->image && file_exists(public_path($package->image))) {
+                unlink(public_path($package->image));
+            }
+
+            $file = $request->file('image');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            $destination = $_SERVER['DOCUMENT_ROOT'] . '/uploads/packages';
+
+            if (!file_exists($destination)) {
+                mkdir($destination, 0755, true);
+            }
+
+            $file->move($destination, $filename);
+
+            $imagePath = 'uploads/packages/' . $filename;
+        }
+
+        $validated['image'] = $imagePath;
         $validated['is_active'] = $request->has('is_active');
+
         $package->update($validated);
 
-        return redirect()->route('admin.packages.index')->with('success', 'Paket berhasil diperbarui.');
+        return redirect()
+            ->route('admin.packages.index')
+            ->with('success', 'Paket berhasil diperbarui.');
     }
 
     public function destroy(PackageKegiatan $package)
     {
+        if ($package->image && file_exists(public_path($package->image))) {
+            unlink(public_path($package->image));
+        }
+
         $package->delete();
-        return redirect()->route('admin.packages.index')->with('success', 'Paket berhasil dihapus.');
+
+        return redirect()
+            ->route('admin.packages.index')
+            ->with('success', 'Paket berhasil dihapus.');
     }
 }

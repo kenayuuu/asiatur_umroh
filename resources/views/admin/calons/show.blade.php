@@ -24,8 +24,8 @@
                     <dt class="col-sm-4">Telepon</dt>
                     <dd class="col-sm-8">{{ $calon->no_telepon }}</dd>
 
-                    <dt class="col-sm-4">Jenis Perjalanan</dt>
-                    <dd class="col-sm-8">{{ ucfirst($calon->jenis_perjalanan) }}</dd>
+                    {{-- <dt class="col-sm-4">Jenis Perjalanan</dt>
+                    <dd class="col-sm-8">{{ ucfirst($calon->jenis_perjalanan) }}</dd> --}}
 
                     <dt class="col-sm-4">Paket</dt>
                     <dd class="col-sm-8">{{ $calon->packageKegiatan?->nama_paket ?? '-' }}</dd>

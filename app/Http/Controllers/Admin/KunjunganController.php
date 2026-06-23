@@ -4,14 +4,25 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kunjungan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class KunjunganController extends Controller
 {
     public function index()
     {
-        $kunjungans = Kunjungan::orderBy('tanggal', 'desc')->paginate(15);
+        $kunjungans = Kunjungan::orderBy('tanggal', 'asc')->paginate(15);
         return view('admin.kunjungans.index', compact('kunjungans'));
+    }
+
+    public function exportPdf()
+    {
+        $kunjungans = Kunjungan::orderBy('tanggal', 'asc')->get();
+        $filename = 'kunjungan-' . now()->format('YmdHis') . '.pdf';
+
+        $pdf = Pdf::loadView('admin.kunjungans.export-pdf', compact('kunjungans'));
+
+        return $pdf->download($filename);
     }
 
     public function create()

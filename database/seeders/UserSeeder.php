@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             // ADMIN
             [
                 'name' => 'Administrator',
-                'email' => 'admin@asiatur.com',
+                'email' => 'nikena608@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('admin123'),
                 'phone' => '081234567890',
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             // USER 1
             [
                 'name' => 'Ahmad Fauzi',
-                'email' => 'ahmad@gmail.com',
+                'email' => 'kenayuuu03@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'phone' => '081111111111',

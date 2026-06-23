@@ -12,51 +12,54 @@ class PackageKegiatanSeeder extends Seeder
     {
         DB::table('package_kegiatans')->insert([
             [
-                'slug' => Str::slug('Paket Wisata Bali 2026'),
-                'nama_paket' => 'Paket Wisata Bali 2026',
-                'tanggal_berlangsung' => '2026-06-15',
-                'destinasi' => 'Bali',
-                'harga' => 3500000,
-                'deposit' => 1000000,
-                'kategori' => 'wisata',
-                'image' => 'images/bali.jpg',
-                'durasi' => '4 Hari 3 Malam',
-                'deskripsi' => 'Liburan wisata ke Bali lengkap dengan hotel dan transportasi.',
-                'rundown' => 'Hari 1 keberangkatan, Hari 2 tour Bali, Hari 3 belanja, Hari 4 pulang.',
-                'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
-            [
-                'slug' => Str::slug('Paket Umroh Ramadhan'),
-                'nama_paket' => 'Paket Umroh Ramadhan',
-                'tanggal_berlangsung' => '2026-03-10',
+                'slug' => Str::slug('paket-umroh-ramadhan'),
+                'nama_paket' => 'Paket Umroh Full Ramadhan',
+                'tanggal_berlangsung' => null,
                 'destinasi' => 'Mekkah & Madinah',
                 'harga' => 35000000,
                 'deposit' => 10000000,
                 'kategori' => 'umroh',
-                'image' => 'images/ramadhan.png',
-                'durasi' => '12 Hari',
-                'deskripsi' => 'Paket umroh spesial bulan Ramadhan.',
-                'rundown' => 'Keberangkatan, ibadah umroh, city tour, kepulangan.',
+                'image' => 'uploads/packages/1781920027_6a35f11b3acc2.jpeg',
+                'durasi' => '35 Hari',
+                'deskripsi' => 'Ibadah Lebih Khusyuk Di Bulan Suci Bersama ASIATUR.
+Berikut syarat-syarat untuk calom jamaah umroh ASIATUR :
+1. Nama Lengkap
+2. Umur
+3. Alamat
+4. No. Paspor
+5. No KK
+6. No KTP
+7. Akta Kelahiran
+8. No Telepon / Email',
+                'rundown' => 'Rundown akan dibahas pada manasik.',
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
             [
-                'slug' => Str::slug('Paket Haji Plus'),
-                'nama_paket' => 'Paket Haji Plus',
-                'tanggal_berlangsung' => '2026-05-20',
-                'destinasi' => 'Arab Saudi',
-                'harga' => 120000000,
-                'deposit' => 30000000,
-                'kategori' => 'haji',
-                'image' => 'haji.jpg',
-                'durasi' => '30 Hari',
-                'deskripsi' => 'Program haji plus dengan fasilitas premium.',
-                'rundown' => 'Manasik, keberangkatan, pelaksanaan haji, kepulangan.',
+                'slug' => Str::slug('paket-haji-plus'),
+                'nama_paket' => 'Paket Umroh Plus Turki',
+                'tanggal_berlangsung' => null,
+                'destinasi' => 'Mekkah, Madinah, Turki, Kuala Lumpur',
+                'harga' => 38000000,
+                'deposit' => 15000000,
+                'kategori' => 'umroh',
+                'image' => 'uploads/packages/1781920039_6a35f1276a41f.jpeg',
+                'durasi' => '14 Hari',
+                'deskripsi' => 'Kapan Lagi Pulang Umroh Mampir di Turki?
+Yuk, Daftar Sekarang!
+
+Berikut syarat-syarat untuk calon jamaah umroh ASIATUR :
+1. Nama Lengkap
+2. Umur
+3. Alamat
+4. No. Paspor
+5. No KK
+6. No KTP
+7. Akta Kelahiran
+8. No Telepon / Email',
+                'rundown' => 'Rundown akan dibahas pada manasik.',
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),

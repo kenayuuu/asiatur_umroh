@@ -20,8 +20,19 @@ class Business extends Model
         'is_active' => 'boolean',
     ];
 
+    // accessor biar bisa pakai: $business->image_url
     public function getImageUrlAttribute(): string
     {
-        return $this->image ? asset('storage/' . $this->image) : asset('images/default-service.jpg');
+        if (empty($this->image)) {
+            return asset('images/asiatur2.png');
+        }
+
+        // kalau sudah full URL
+        if (preg_match('/^https?:\/\//', $this->image)) {
+            return $this->image;
+        }
+
+        // kalau path dari public/uploads/...
+        return asset($this->image);
     }
 }
