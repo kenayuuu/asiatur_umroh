@@ -24,7 +24,7 @@
             <a href="{{ route('landing') }}" class="inline-flex items-center space-x-2">
                 <img src="{{ asset('images/asiatur2.png') }}" class="h-12 w-auto" alt="Logo ASIATUR">
                 <span class="text-red-600 text-2xl font-bold">
-                    {{ __('app.name') ?? 'ASIATUR' }}
+                    {{ __('ASIATUR') ?? 'ASIATUR' }}
                 </span>
             </a>
         </div>

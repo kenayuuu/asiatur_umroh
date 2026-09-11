@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Business;
+use App\Models\CalonCadangan;
 use App\Models\PackageKegiatan;
 use Illuminate\Http\Request;
 
@@ -49,49 +50,62 @@ class PackageController extends Controller
     {
         $validated = $request->validate([
             'nama_lengkap' => 'required|string|max:255',
-            'email' => 'required|email',
+            'email' => 'required|email|max:255',
             'no_telepon' => 'required|string|max:20',
             'umur' => 'required|integer|min:1|max:150',
             'alamat' => 'required|string|max:255',
+
             'package_id' => 'required|exists:package_kegiatans,id',
+
             'no_paspor' => 'nullable|string|max:50',
             'no_ktp' => 'nullable|string|max:50',
             'no_kk' => 'nullable|string|max:50',
             'akta_kelahiran' => 'nullable|string|max:50',
+
             'catatan' => 'nullable|string|max:1000',
         ]);
 
-        $package = PackageKegiatan::find($validated['package_id']);
+        // Ambil paket yang dipilih
+        $package = PackageKegiatan::findOrFail(
+            $validated['package_id']
+        );
 
-        // Generate pesan WhatsApp
-        $message = "Assalamu'alaikum warahmatullahi wabarakatuh.\n\n";
-        $message .= "Halo Admin ASIATUR \n\n";
-        $message .= "Saya telah melakukan pengisian formulir pendaftaran melalui website ASIATUR dengan data sebagai berikut:\n\n";
+        // Simpan data pendaftaran ke calon_cadangan
+        CalonCadangan::create([
+            'nama_lengkap' => $validated['nama_lengkap'],
+            'umur' => $validated['umur'],
+            'alamat' => $validated['alamat'],
 
-        $message .= " *Nama Lengkap:* " . $validated['nama_lengkap'] . "\n";
-        $message .= " *Email:* " . $validated['email'] . "\n";
-        $message .= " *Nomor WhatsApp:* " . $validated['no_telepon'] . "\n";
-        $message .= " *Umur:* " . $validated['umur'] . " Tahun\n";
-        $message .= " *Alamat:* " . $validated['alamat'] . "\n\n";
+            'no_paspor' => $validated['no_paspor'] ?? null,
+            'no_kk' => $validated['no_kk'] ?? null,
+            'no_ktp' => $validated['no_ktp'] ?? null,
+            'akta_kelahiran' => $validated['akta_kelahiran'] ?? null,
 
-        $message .= " *Paket yang Dipilih:* " . $package->nama_paket . "\n";
-        $message .= " *Tanggal Keberangkatan:* " . ($package->tanggal_berlangsung?->format('d M Y') ?? 'TBA') . "\n\n";
+            'no_telepon' => $validated['no_telepon'],
+            'email' => $validated['email'],
 
-        $message .= " *Nomor Paspor:* " . ($validated['no_paspor'] ?? '-') . "\n";
-        $message .= " *Nomor KTP:* " . ($validated['no_ktp'] ?? '-') . "\n";
-        $message .= " *Nomor KK:* " . ($validated['no_kk'] ?? '-') . "\n";
-        $message .= " *Akta Kelahiran:* " . ($validated['akta_kelahiran'] ?? '-') . "\n\n";
+            // Mengambil data dari paket
+            'jenis_perjalanan' => $package->kategori,
+            'tanggal_berangkat' => $package->tanggal_berlangsung,
 
-        $message .= " *Catatan:*\n";
-        $message .= ($validated['catatan'] ?? '-') . "\n\n";
+            // Paket yang dipilih
+            'package_kegiatan_id' => $package->id,
 
-        $message .= "Mohon informasi lebih lanjut mengenai proses pendaftaran dan tahapan berikutnya.\n\n";
-        $message .= "Terima kasih.\n";
-        $message .= "Wassalamu'alaikum warahmatullahi wabarakatuh.";
+            'catatan' => $validated['catatan'] ?? null,
 
-        // Generate WhatsApp link
-        $whatsappLink = 'https://wa.me/628116619260?text=' . urlencode($message);
+            // Pendaftaran dari website, bukan dari user yang login
+            'registered_by' => null,
 
-        return redirect($whatsappLink);
+            // Menunggu verifikasi admin
+            'status' => 'pending',
+        ]);
+
+        // Kembali ke halaman sebelumnya
+        return redirect()
+            ->back()
+            ->with(
+                'success',
+                'Pendaftaran berhasil dikirim. Data Anda sedang menunggu proses verifikasi oleh admin.'
+            );
     }
 }

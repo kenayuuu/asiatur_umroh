@@ -11,64 +11,24 @@ use App\Http\Controllers\Admin\KunjunganController;
 use App\Http\Controllers\Admin\BusinessController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\PackageBookingController;
 use Illuminate\Support\Facades\Hash;
-
-// Route::get('/generate-hash', function () {
-//     return Hash::make('hahahihi');
-// });
-
-// Route::get('/cek-public', function () {
-//     return [
-//         'public_path' => public_path(),
-//         'manifest_exists' => file_exists(public_path('build/manifest.json')),
-//         'manifest_path' => public_path('build/manifest.json'),
-//     ];
-// });
-
-/*
-|--------------------------------------------------------------------------
-| Landing Page (umum)
-|--------------------------------------------------------------------------
-*/
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 Route::get('/paket-wisata', [PackageController::class, 'wisata'])->name('paket.wisata');
 Route::get('/paket-umroh-haji', [PackageController::class, 'umrohHaji'])->name('paket.umroh-haji');
-Route::get('/paket/{package}', [PackageController::class, 'show'])->name('package.show');
-Route::post('/paket-booking', [PackageController::class, 'submitBooking'])->name('package.booking');
+Route::get('/paket/{package}', [PackageController::class, 'show'])->name('package.show');   
 Route::get('/bisnis-lainnya', [PackageController::class, 'businesses'])->name('bisnis.lainnya');
 Route::get('/profil-kontak', [PackageController::class, 'contact'])->name('profil.kontak');
+Route::post('/package/booking', [PackageBookingController::class, 'store'])
+    ->name('package.booking');
 
-
-/*
-|--------------------------------------------------------------------------
-| Auth Routes
-|--------------------------------------------------------------------------
-*/
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login.form');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/otp-verification', [AuthController::class, 'showOtpForm'])->name('otp.form');
 Route::post('/otp-verification', [AuthController::class, 'verifyOtp'])->name('otp.verify');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
-/*
-|--------------------------------------------------------------------------
-| Pelanggan Routes (Customer)
-|--------------------------------------------------------------------------
-*/
-
-/*
-|--------------------------------------------------------------------------
-| Admin Routes (semua admin) - konsolidasi
-|--------------------------------------------------------------------------
-|
-| Semua rute admin berada di sini dengan middleware 'auth'. Controller
-| melakukan pengecekan per-action (canManageOperational, canManageContent, ...)
-| sehingga role seperti Pimpinan tetap bisa mengakses index/show tanpa
-| pendaftaran rute duplikat.
-|
-*/
 Route::prefix('admin')
     ->name('admin.')
     ->middleware(['auth'])

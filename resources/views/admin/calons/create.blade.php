@@ -58,7 +58,42 @@
                 <form action="{{ route('admin.calons.store') }}" method="POST">
 
                     @csrf
+                    {{-- Pilih dari Calon Cadangan --}}
+                    <div class="mb-4">
 
+                        <label class="form-label fw-semibold">
+                            Pendaftaran Website
+                        </label>
+
+                        <select name="calon_cadangan_id" id="calon_cadangan_id"
+                            class="form-select form-select-lg rounded-3">
+
+                            <option value="">
+                                -- Input calon baru secara manual --
+                            </option>
+
+                            @foreach ($calonCadangan as $cadangan)
+                                <option value="{{ $cadangan->id }}" data-nama="{{ $cadangan->nama_lengkap }}"
+                                    data-email="{{ $cadangan->email }}" data-telepon="{{ $cadangan->no_telepon }}"
+                                    data-umur="{{ $cadangan->umur }}" data-alamat="{{ $cadangan->alamat }}"
+                                    data-ktp="{{ $cadangan->no_ktp }}" data-kk="{{ $cadangan->no_kk }}"
+                                    data-paspor="{{ $cadangan->no_paspor }}" data-akta="{{ $cadangan->akta_kelahiran }}"
+                                    data-jenis="{{ $cadangan->jenis_perjalanan }}"
+                                    data-tanggal="{{ $cadangan->tanggal_berangkat?->format('Y-m-d') }}"
+                                    data-package="{{ $cadangan->package_kegiatan_id }}"
+                                    data-catatan="{{ $cadangan->catatan }}">
+                                    {{ $cadangan->nama_lengkap }}
+                                    — {{ $cadangan->no_telepon }}
+                                </option>
+                            @endforeach
+
+                        </select>
+
+                        <small class="text-muted">
+                            Pilih data pendaftaran dari website untuk mengisi formulir secara otomatis.
+                        </small>
+
+                    </div>
                     <div class="row g-4">
 
                         {{-- Nama --}}
@@ -239,4 +274,63 @@
 
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const dropdown = document.getElementById('calon_cadangan_id');
+
+            if (!dropdown) {
+                return;
+            }
+
+            dropdown.addEventListener('change', function() {
+
+                const option = this.options[this.selectedIndex];
+
+                if (!option.value) {
+                    return;
+                }
+
+                document.querySelector('[name="nama_lengkap"]').value =
+                    option.dataset.nama || '';
+
+                document.querySelector('[name="email"]').value =
+                    option.dataset.email || '';
+
+                document.querySelector('[name="no_telepon"]').value =
+                    option.dataset.telepon || '';
+
+                document.querySelector('[name="umur"]').value =
+                    option.dataset.umur || '';
+
+                document.querySelector('[name="alamat"]').value =
+                    option.dataset.alamat || '';
+
+                document.querySelector('[name="no_ktp"]').value =
+                    option.dataset.ktp || '';
+
+                document.querySelector('[name="no_kk"]').value =
+                    option.dataset.kk || '';
+
+                document.querySelector('[name="no_paspor"]').value =
+                    option.dataset.paspor || '';
+
+                document.querySelector('[name="akta_kelahiran"]').value =
+                    option.dataset.akta || '';
+
+                document.querySelector('[name="jenis_perjalanan"]').value =
+                    option.dataset.jenis || '';
+
+                document.querySelector('[name="tanggal_berangkat"]').value =
+                    option.dataset.tanggal || '';
+
+                document.querySelector('[name="package_kegiatan_id"]').value =
+                    option.dataset.package || '';
+
+                document.querySelector('[name="catatan"]').value =
+                    option.dataset.catatan || '';
+            });
+
+        });
+    </script>
 @endsection

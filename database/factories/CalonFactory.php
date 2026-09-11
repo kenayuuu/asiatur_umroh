@@ -3,50 +3,53 @@
 namespace Database\Factories;
 
 use App\Models\PackageKegiatan;
+use Faker\Factory as FakerFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
 
 class CalonFactory extends Factory
 {
     public function definition(): array
     {
+        $faker = FakerFactory::create('id_ID');
+
         return [
-            'nama_lengkap' => fake()->name(),
+            'nama_lengkap' => $faker->name(),
 
-            'umur' => fake()->numberBetween(20, 60),
+            'umur' => $faker->numberBetween(20, 60),
 
-            'alamat' => fake()->address(),
+            'alamat' => $faker->address(),
 
-            'no_paspor' => strtoupper(fake()->bothify('??#######')),
+            'no_paspor' => strtoupper(
+                $faker->bothify('??#######')
+            ),
 
-            'no_kk' => fake()->numerify('################'),
+            'no_kk' => $faker->numerify('################'),
 
-            'no_ktp' => fake()->numerify('################'),
+            'no_ktp' => $faker->numerify('################'),
 
             'akta_kelahiran' => 'akta.pdf',
 
-            'no_telepon' => fake()->phoneNumber(),
+            'no_telepon' => $faker->phoneNumber(),
 
-            'email' => fake()->unique()->safeEmail(),
+            'email' => $faker->unique()->safeEmail(),
 
-            'jenis_perjalanan' => fake()->randomElement([
+            'jenis_perjalanan' => $faker->randomElement([
                 'wisata',
                 'umroh',
-                'haji'
+                'haji',
             ]),
 
-            'tanggal_berangkat' => fake()->dateTimeBetween(
+            'tanggal_berangkat' => $faker->dateTimeBetween(
                 'now',
                 '+1 year'
             ),
 
-            // sesuaikan dengan id package yang ada
-            'package_kegiatan_id' => PackageKegiatan::inRandomOrder()->value('id'),
+            'package_kegiatan_id' => PackageKegiatan::inRandomOrder()
+                ->value('id'),
 
-            'catatan' => fake()->sentence(),
+            'catatan' => $faker->sentence(),
 
             'created_at' => now(),
-
             'updated_at' => now(),
         ];
     }

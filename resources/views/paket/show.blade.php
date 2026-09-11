@@ -3,6 +3,26 @@
 @section('title', $package->nama_paket . ' - ASIATUR')
 
 @section('content')
+{{-- Pesan sukses --}}
+    @if(session('success'))
+    <div style="background: #d1fae5; color: #065f46; padding: 15px; margin: 20px;">
+        {{ session('success') }}
+    </div>
+@endif
+
+    {{-- Pesan error validasi --}}
+    @if($errors->any())
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+            <div class="mb-6 rounded-lg bg-red-100 border border-red-300 px-4 py-3 text-red-800">
+                <ul class="list-disc pl-5">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
+
     <section class="min-h-screen bg-red-200 text-black pt-24 pb-24">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid gap-8 lg:grid-cols-[1.8fr_1.1fr] items-start">
@@ -105,19 +125,19 @@
                     <div class="rounded-3xl border border-gray-200 bg-white p-8 shadow-lg space-y-4">
 
                         <h3 class="text-xl font-semibold">
-                            Langkah Pesan
+                            Langkah Pendaftaran
                         </h3>
 
                         <ol class="list-decimal list-inside space-y-3 text-gray-600">
                             <li>Pilih paket dan lihat detail.</li>
-                            <li>Hubungi admin melalui WhatsApp.</li>
-                            <li>Konfirmasi data peserta.</li>
-                            <li>Bayar deposit sesuai ketentuan.</li>
+                            <li>Isi formulir pendaftaran.</li>
+                            <li>Kirim data pendaftaran.</li>
+                            <li>Tunggu proses verifikasi dari admin.</li>
                         </ol>
 
                         <button id="openBookingModal"
                             class="block w-full text-center rounded-full bg-red-600 px-6 py-4 text-white font-semibold transition hover:bg-red-700 cursor-pointer">
-                            Pesan Sekarang via WhatsApp
+                            Daftar Sekarang
                         </button>
 
                     </div>
@@ -273,7 +293,7 @@
                     </button>
                     <button type="submit"
                         class="flex-1 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 rounded-lg text-white font-bold hover:shadow-lg transition duration-200 flex items-center justify-center gap-2">
-                        <span>✓</span> Kirim ke WhatsApp
+                        <span>✓</span> Kirim Pendaftaran
                     </button>
                 </div>
             </form>
@@ -316,4 +336,60 @@
             });
         });
     </script>
+
+
+{{-- Pop Up Pendaftaran Berhasil --}}
+@if(session('booking_success'))
+    <div id="successPopup"
+         class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 px-4">
+
+        <div class="w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-2xl">
+
+            {{-- Icon centang --}}
+            <div class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="h-10 w-10 text-green-600"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor"
+                     stroke-width="2">
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M5 13l4 4L19 7"/>
+                </svg>
+            </div>
+
+            <h2 class="mb-2 text-2xl font-bold text-gray-800">
+                Pendaftaran Berhasil!
+            </h2>
+
+            <p class="mb-6 text-gray-600">
+                Data pendaftaran kamu berhasil dikirim.
+                Silakan tunggu proses verifikasi dari admin.
+            </p>
+
+            <button type="button"
+                    onclick="closeSuccessPopup()"
+                    class="w-full rounded-lg bg-green-600 px-5 py-3 font-semibold text-white transition hover:bg-green-700">
+                OK
+            </button>
+
+        </div>
+    </div>
+
+    <script>
+        function closeSuccessPopup() {
+            const popup = document.getElementById('successPopup');
+
+            if (popup) {
+                popup.remove();
+            }
+        }
+
+        // Tutup otomatis setelah 5 detik
+        setTimeout(() => {
+            closeSuccessPopup();
+        }, 5000);
+    </script>
+@endif
 @endsection

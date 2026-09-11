@@ -38,7 +38,7 @@ class UserController extends Controller
             'email' => 'required|email:rfc,dns|max:255|unique:users,email',
             'phone' => 'nullable|string|max:30',
             'address' => 'nullable|string',
-            'role' => 'required|in:admin,user',
+            'role' => 'required|in:admin,karyawan,member',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
@@ -71,7 +71,7 @@ class UserController extends Controller
             'email' => 'required|email:rfc,dns|max:255|unique:users,email,' . $user->id,
             'phone' => 'nullable|string|max:30',
             'address' => 'nullable|string',
-            'role' => 'required|in:admin,user',
+            'role' => 'required|in:admin,karyawan,member',
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 

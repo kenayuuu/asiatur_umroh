@@ -2,61 +2,50 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        DB::table('users')->insert([
-
-            // ADMIN
-            [
-                'name' => 'Administrator',
-                'email' => 'nikena608@gmail.com',
-                'email_verified_at' => now(),
-                'password' => Hash::make('admin123'),
-                'phone' => '081234567890',
-                'address' => 'Batam, Kepulauan Riau',
-                'role' => 'admin',
-                'remember_token' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
-            // USER 1
-            [
-                'name' => 'Ahmad Fauzi',
-                'email' => 'kenayuuu03@gmail.com',
-                'email_verified_at' => now(),
-                'password' => Hash::make('password'),
-                'phone' => '081111111111',
-                'address' => 'Padang, Sumatera Barat',
-                'role' => 'user',
-                'remember_token' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
-            // USER 2
-            [
-                'name' => 'Siti Nurhaliza',
-                'email' => 'siti@gmail.com',
-                'email_verified_at' => now(),
-                'password' => Hash::make('password'),
-                'phone' => '082222222222',
-                'address' => 'Batam, Kepulauan Riau',
-                'role' => 'user',
-                'remember_token' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
+        // ADMIN
+        User::create([
+            'name' => 'Administrator',
+            'email' => 'nikena608@gmail.com',
+            'password' => Hash::make('admin123'),
+            'phone' => '081234567890',
+            'address' => 'Batam, Kepulauan Riau',
+            'role' => 'admin',
+            'email_verified_at' => now(),
         ]);
+
+        // KARYAWAN
+        User::create([
+            'name' => 'Ahmad Fauzi',
+            'email' => 'kenayuuu03@gmail.com',
+            'password' => Hash::make('password'),
+            'phone' => '081111111111',
+            'address' => 'Padang, Sumatera Barat',
+            'role' => 'karyawan',
+            'email_verified_at' => now(),
+        ]);
+
+        // MEMBER
+        User::create([
+            'name' => 'Siti Nurhaliza',
+            'email' => 'siti@gmail.com',
+            'password' => Hash::make('password'),
+            'phone' => '082222222222',
+            'address' => 'Batam, Kepulauan Riau',
+            'role' => 'member',
+            'email_verified_at' => now(),
+        ]);
+
+        $this->command->info('✅ UserSeeder berhasil dijalankan!');
+        $this->command->info('Admin    : nikena608@gmail.com / admin123');
+        $this->command->info('Karyawan : kenayuuu03@gmail.com / password');
+        $this->command->info('Member   : siti@gmail.com / password');
     }
 }

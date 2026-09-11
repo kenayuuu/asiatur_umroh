@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('no_ktp')->nullable();
             $table->string('akta_kelahiran')->nullable();
             $table->string('no_telepon');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->enum('jenis_perjalanan', ['wisata', 'umroh', 'haji'])->default('wisata');
             $table->date('tanggal_berangkat')->nullable();
             $table->foreignId('package_kegiatan_id')->constrained('package_kegiatans')->cascadeOnDelete();

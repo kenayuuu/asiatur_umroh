@@ -19,7 +19,7 @@
                     <img src="{{ asset('images/asiatur2.png') }}" class="h-10 lg:h-12 w-auto" alt="Logo ASIATUR">
 
                     <span class="text-red-600 text-xl font-bold hidden sm:inline-block">
-                        {{ __('app.name') ?? 'ASIATUR' }}
+                        {{ __('ASIATUR') ?? 'ASIATUR' }}
                     </span>
                 </a>
             </div>
