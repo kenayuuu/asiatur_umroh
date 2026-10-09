@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             KunjunganSeeder::class,
             BusinessSeeder::class,
             UserSeeder::class,
+            KaryawanMemberSeeder::class,
         ]);
     }
 }
